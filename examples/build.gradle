@@ -1,0 +1,127 @@
+apply plugin: 'java'
+apply plugin: 'pmd'
+
+repositories {
+    mavenCentral()
+}
+
+pmd {
+    toolVersion = '5.3.2'
+    ruleSets = []
+    ruleSetFiles = files('config/pmd/rulesets.xml')
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.5'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.5'
+    compile project(':jspeedtest')
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
+}
+
+task downloadFile(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.DownloadFileExample"
+    args ""
+}
+
+task downloadFTP(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.DownloadFtpExample"
+    args ""
+}
+
+task downloadFileProxy(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.DownloadFileProxyExample"
+    args ""
+}
+
+task uploadFile(type: JavaExec) {
+    classpath sourceSets.test.runtimeClasspath
+    main = "fr.bmartel.speedtest.examples.UploadFileExample"
+    args ""
+}
+
+task uploadFTP(type: JavaExec) {
+    classpath sourceSets.test.runtimeClasspath
+    main = "fr.bmartel.speedtest.examples.UploadFtpExample"
+    args ""
+}
+
+task fixedDownload(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.FixedTimeDownloadExample"
+    args ""
+}
+
+task fixedUpload(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.FixedTimeUploadExample"
+    args ""
+}
+
+task repeatDownload(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.RepeatDownloadExample"
+    args ""
+}
+
+task repeatUpload(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.RepeatUploadExample"
+    args ""
+}
+
+task repeatChain(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.ChainingRepeatExample"
+    args ""
+}
+
+task repeatChainFixed(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.resources
+    main = "fr.bmartel.speedtest.examples.ChainingFixedExample"
+    args ""
+}
+
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+    destinationDir = file("./doc/")
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
