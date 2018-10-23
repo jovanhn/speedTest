@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<Client> clients = makeClients(1);
+        List<Client> clients = makeClients(4);
         for(Client client :clients){
             client.executeClient();
         }

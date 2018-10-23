@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+
 import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
 import fr.bmartel.speedtest.SpeedTestReport;
@@ -17,16 +18,16 @@ import fr.bmartel.speedtest.SpeedTestSocket;
 /**
  * @author Milos Milanovic
  */
-public abstract class InternetSpeedTest extends AsyncTask<Void, Void, String> {
+public abstract class InternetSpeedTestTelus extends AsyncTask<Void, Void, String> {
 
     /** Socket timeout used in ms. */
     private final static int SOCKET_TIMEOUT = 60000;
     /** Wait to cancel Speed Test Task. 90sec*/
     private static final int WAIT_TO_CACNCEL = 90000;
 
-    private String SPEED_TEST_FILE_SASKTEL ="http://www.proda.maxstream.pres.sasktel.com/Speedtest/filename.txt";
     private String SPEED_TEST_FILE_VANCOUVER ="http://vancouver.speedtest.telus.com/speedtest/random2500x2500.jpg";
     private String SPEED_TEST_FILE_EDMONTON ="http://edmonton.speedtest.telus.com/speedtest/random2500x2500.jpg";
+    private String SPEED_TEST_FILE_SERBIA ="https://speed.hetzner.de/100MB.bin";
     /** Fields. */
     private Handler mHandler = null;
     private SpeedTestSocket mSpeedTestSocket = null;
@@ -62,14 +63,11 @@ public abstract class InternetSpeedTest extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-            //    for (int i = 0; i < 10; i++) {
-             //       Log.d(TAG, i + "# ping=" + pingHost(SPEED_TEST_HOST) + " ms");
-            //    }
+//        for (int i = 0; i < 10; i++) {
+//            Log.d(TAG, i + "# ping=" + pingHost(Constants.SPEED_TEST_HOST) + " ms");
+//        }
         mSpeedTestSocket = new SpeedTestSocket();
-
-        //mSpeedTestSocket.setDownloadSetupTime(5000);
         mSpeedTestSocket.setSocketTimeout(SOCKET_TIMEOUT);
-
         mSpeedTestSocket.addSpeedTestListener(new ISpeedTestListener() {
 
             @Override
@@ -82,7 +80,6 @@ public abstract class InternetSpeedTest extends AsyncTask<Void, Void, String> {
             @Override
             public void onProgress(final float percent, final SpeedTestReport report) {
                 //Log.i("SpeedTest", "percent: " + percent + ", bitrate: " + report.getTransferRateBit().doubleValue());
-
                 mHandler.post(new Runnable() {
 
                     @Override
@@ -98,7 +95,7 @@ public abstract class InternetSpeedTest extends AsyncTask<Void, Void, String> {
                 //Log.i("SpeedTest", "errorMessage: " + errorMessage);
             }
         });
-        mSpeedTestSocket.startDownload(SPEED_TEST_FILE_EDMONTON);
+        mSpeedTestSocket.startDownload(SPEED_TEST_FILE_VANCOUVER);
         return null;
     }
 
