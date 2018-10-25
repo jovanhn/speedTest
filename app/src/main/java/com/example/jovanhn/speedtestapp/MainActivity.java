@@ -40,6 +40,8 @@ public class MainActivity extends Activity {
          */
         TestSpeedTest testSpeedTest = new TestSpeedTest(4);
         testSpeedTest.startTest();
+
+        spee
     }
 
 

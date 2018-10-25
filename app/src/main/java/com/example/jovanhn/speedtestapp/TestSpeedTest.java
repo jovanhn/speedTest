@@ -36,4 +36,7 @@ public class TestSpeedTest {
         startClients();
         clientChecker.start();
     }
+    public double getClientsSpeed() {
+        return clientChecker.getCurrSpeed();
+    }
 }

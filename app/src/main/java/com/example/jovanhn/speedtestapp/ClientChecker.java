@@ -15,6 +15,7 @@ public class ClientChecker extends Thread {
     private boolean allDone = false;
     private double averageSpeed = 0.0;
     private int average_counter = 0;
+    private double currSpeed = 0.0;
 
     public ClientChecker(List<Client> clients){
         this.clients = clients;
@@ -29,6 +30,7 @@ public class ClientChecker extends Thread {
                 double maximumSpeed = Math.round((maxSpeed(clients)* (1514.0/1460.0))*100.0)/100.0;
                 averageSpeed+=sum_all_curr_speed(clients);
                 average_counter++;
+                currSpeed = Math.round(sum_all_curr_speed(clients)*100.0)/100.0;
 
                 Log.i("Current_speed", Math.round(sum_all_curr_speed(clients)*100.0)/100.0 + " ");
                 Log.i("Max_speed_local: ", Math.round(maximumSpeed*100.0)/100.0 + ", Number of clients: " + clients.size());
@@ -94,6 +96,9 @@ public class ClientChecker extends Thread {
             Log.i("Speed_at_progress",Math.round(speedAtProgress(clients, i)*100.0)/100.0+ " Mbps, " + i + "%");
         }
         Log.i("Speed_at_progress","========= Done ==========");
+    }
+    public double getCurrSpeed(){
+        return currSpeed;
     }
 
 
