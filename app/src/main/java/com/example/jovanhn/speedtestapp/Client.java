@@ -25,6 +25,7 @@ public class Client {
     public Client(){
         maxSpeed = 0.0;
         clientId = ++totalClients;
+
         internetSpeedTest = new InternetSpeedTest() {
             @Override
             public void downloadIsCanceled() {

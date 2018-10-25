@@ -26,29 +26,22 @@ import java.util.List;
  */
 public class MainActivity extends Activity {
 
+    private String SPEED_TEST_FILE_SASKTEL ="http://www.proda.maxstream.pres.sasktel.com/Speedtest/filename.txt";
+    private String SPEED_TEST_FILE_VANCOUVER ="http://vancouver.speedtest.telus.com/speedtest/random2500x2500.jpg";
+    private String SPEED_TEST_FILE_EDMONTON ="http://edmonton.speedtest.telus.com/speedtest/random2500x2500.jpg";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<Client> clients = makeClients(4);
-        for(Client client :clients){
-            client.executeClient();
-        }
-
-        ClientChecker t1 = new ClientChecker(clients);
-        t1.start();
-
+        /**
+         * Executing a speedTest
+         */
+        TestSpeedTest testSpeedTest = new TestSpeedTest(4);
+        testSpeedTest.startTest();
     }
 
-    public List<Client> makeClients(int n){
 
-        List<Client> clients = new ArrayList<>();
-        for(int i = 0; i < n; i++){
-            Client client =  new Client();
-            clients.add(client);
-        }
-        return clients;
-    }
 
 }
